@@ -1,19 +1,17 @@
-%define name	unshield
-%define version 0.5
-%define release %mkrel 2
-
-%define	major	0
-%define libname	%mklibname %{name} %{major}
+%define major 0
+%define libname %mklibname %{name} %{major}
+%define develname %mklibname %{name} -d
 
 Summary:	A program to extract InstallShield cabinet files
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		unshield
+Version:	0.5
+Release:	%mkrel 3
 License:	MIT
 Group:		Networking/Other
 URL:		http://synce.sourceforge.net/
 Source0:	%{name}-%{version}.tar.bz2
 BuildRequires:	zlib-devel
+BuildRequires:	libtool
 BuildRoot:	%{_tmppath}/%{name}-root
 
 %description
@@ -34,16 +32,16 @@ simply unpacks such files.
 
 See http://synce.sourceforge.net/ for more information.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Development library and header files for %{name}
 Group:		Development/C
-Obsoletes:	%{name}-devel
-Provides:	%{name}-devel
-Provides:	lib%{name}-devel
+Requires:	%{libname} = %{version}
 Requires:	zlib-devel
-Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
+Provides:	lib%{name}-devel = %{version}-%{release}
+Obsoletes:	%{mklibname %{name} 0 -d}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 Cabinet (.CAB) files are a form of archive, which is used by
 the InstallShield installer software. The unshield program
 simply unpacks such files.
@@ -55,7 +53,9 @@ See http://synce.sourceforge.net/ for more information.
 %setup -q -n %{name}-%{version}
 
 %build
-sh bootstrap
+#sh bootstrap
+libtoolize --copy --force --automake; aclocal -I m4; autoheader; automake --copy --foreign --add-missing; autoconf
+
 export CFLAGS="%{optflags} -fPIC"
 
 %configure2_5x
@@ -85,7 +85,7 @@ export CFLAGS="%{optflags} -fPIC"
 %{_libdir}/*.so.*
 #%{_mandir}/man3/*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %doc TODO LICENSE
 %{_includedir}/*
@@ -93,6 +93,3 @@ export CFLAGS="%{optflags} -fPIC"
 %{_libdir}/*.a
 %{_libdir}/*.la
 %{_datadir}/aclocal/unshield.m4
-
-
-
