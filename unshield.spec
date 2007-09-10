@@ -10,6 +10,7 @@ License:	MIT
 Group:		Networking/Other
 URL:		http://synce.sourceforge.net/
 Source0:	%{name}-%{version}.tar.bz2
+Patch0:		unshield-antibork.diff
 BuildRequires:	zlib-devel
 BuildRequires:	libtool
 BuildRoot:	%{_tmppath}/%{name}-root
@@ -51,6 +52,7 @@ See http://synce.sourceforge.net/ for more information.
 %prep
 
 %setup -q -n %{name}-%{version}
+%patch0 -p1
 
 %build
 #sh bootstrap
