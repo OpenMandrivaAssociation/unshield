@@ -13,6 +13,7 @@ Source0:	%{name}-%{version}.tar.bz2
 Patch0:		unshield-antibork.diff
 BuildRequires:	zlib-devel
 BuildRequires:	libtool
+BuildRoot:	%{_tmppath}/%{name}-root
 
 %description
 Cabinet (.CAB) files are a form of archive, which is used by
