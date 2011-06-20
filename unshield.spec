@@ -5,7 +5,7 @@
 Summary:	A program to extract InstallShield cabinet files
 Name:		unshield
 Version:	0.6
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	MIT
 Group:		Networking/Other
 URL:		http://synce.sourceforge.net/
@@ -58,6 +58,10 @@ See http://synce.sourceforge.net/ for more information.
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 %makeinstall_std
+
+%if "%{_lib}" == "lib64"
+perl -pi -e "s|-L/usr/lib\b|-L%{_libdir}|g" %{buildroot}%{_libdir}/*.la
+%endif
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
