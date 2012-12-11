@@ -13,7 +13,6 @@ Source0:	http://downloads.sourceforge.net/synce/%{name}-%{version}.tar.gz
 BuildRequires:	zlib-devel
 BuildRequires:	libtool
 BuildRequires:	openssl-devel
-BuildRoot:	%{_tmppath}/%{name}-root
 
 %description
 Cabinet (.CAB) files are a form of archive, which is used by
@@ -52,7 +51,7 @@ See http://synce.sourceforge.net/ for more information.
 %setup -q -n %{name}-%{version}
 
 %build
-%configure2_5x --with-ssl
+%configure2_5x --with-ssl --disable-static
 %make
 
 %install
@@ -63,32 +62,16 @@ See http://synce.sourceforge.net/ for more information.
 perl -pi -e "s|-L/usr/lib\b|-L%{_libdir}|g" %{buildroot}%{_libdir}/*.la
 %endif
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc ChangeLog LICENSE README TODO
 %{_bindir}/unshield
 %{_mandir}/man1/*
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %doc ChangeLog LICENSE README TODO
 %{_includedir}/*
 %{_libdir}/*.so
-%{_libdir}/*.a
-%{_libdir}/*.la
 %{_libdir}/pkgconfig/*.pc
