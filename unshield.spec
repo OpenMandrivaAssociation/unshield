@@ -4,14 +4,14 @@
 
 Summary:	A program to extract InstallShield cabinet files
 Name:		unshield
-Version:	0.6
-Release:	5
+Version:	1.4.3
+Release:	1
 License:	MIT
 Group:		Networking/Other
 URL:		http://synce.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/synce/%{name}-%{version}.tar.gz
+Source0:	https://github.com/twogood/unshield/archive/%{version}.tar.gz
 BuildRequires:	zlib-devel
-BuildRequires:	libtool
+BuildRequires:	cmake
 BuildRequires:	openssl-devel
 
 %description
@@ -48,22 +48,17 @@ simply unpacks such files.
 See http://synce.sourceforge.net/ for more information.
 
 %prep
-%setup -q -n %{name}-%{version}
+%autosetup -p1
 
 %build
-%configure2_5x --with-ssl --disable-static
-%make
+%cmake
+%make_build
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-%makeinstall_std
-
-%if "%{_lib}" == "lib64"
-perl -pi -e "s|-L/usr/lib\b|-L%{_libdir}|g" %{buildroot}%{_libdir}/*.la
-%endif
+%make_install -C build
 
 %files
-%doc ChangeLog LICENSE README TODO
+%doc ChangeLog LICENSE
 %{_bindir}/unshield
 %{_mandir}/man1/*
 
@@ -71,7 +66,7 @@ perl -pi -e "s|-L/usr/lib\b|-L%{_libdir}|g" %{buildroot}%{_libdir}/*.la
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%doc ChangeLog LICENSE README TODO
+%doc ChangeLog LICENSE
 %{_includedir}/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
