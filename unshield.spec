@@ -12,7 +12,7 @@ URL:		http://synce.sourceforge.net/
 Source0:	https://github.com/twogood/unshield/archive/%{version}.tar.gz
 BuildRequires:	zlib-devel
 BuildRequires:	cmake
-BuildRequires:	openssl-devel
+BuildRequires:	pkgconfig(openssl)
 
 %description
 Cabinet (.CAB) files are a form of archive, which is used by
