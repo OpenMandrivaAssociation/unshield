@@ -5,7 +5,7 @@
 Summary:	A program to extract InstallShield cabinet files
 Name:		unshield
 Version:	1.5.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		Networking/Other
 URL:		http://synce.sourceforge.net/
