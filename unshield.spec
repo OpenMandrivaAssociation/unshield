@@ -8,7 +8,7 @@ Version:	1.5.1
 Release:	2
 License:	MIT
 Group:		Networking/Other
-URL:		http://synce.sourceforge.net/
+URL:		https://synce.sourceforge.net/
 Source0:	https://github.com/twogood/unshield/archive/%{version}.tar.gz
 BuildRequires:	zlib-devel
 BuildRequires:	cmake
